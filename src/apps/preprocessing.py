@@ -71,7 +71,7 @@ def _ensure_syspath(caller_globals: dict, tag: str) -> None:
             RUN apt-get update && apt-get install -y python3-pip python3-dev libgl1-mesa-glx libglib2.0-0
 
             RUN pip3 install --upgrade pip
-            RUN pip3 install fastapi uvicorn msgpack msgpack-numpy numpy onnxruntime-gpu
+            RUN pip3 install fastapi uvicorn msgpack msgpack-numpy numpy onnx onnxruntime-gpu
             RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
             WORKDIR /app

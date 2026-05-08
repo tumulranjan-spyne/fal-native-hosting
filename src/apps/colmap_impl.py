@@ -2,6 +2,8 @@
 import threading
 
 from src.utils import create_app, unpack_request, pack_response
+from src.batch_payload import samples_to_stacked_inputs
+from src.torch_batch_run import run_torch_model_batched
 import os
 import numpy as np
 from fastapi import Request, Response
@@ -47,6 +49,25 @@ async def infer(model_name: str, request: Request):
         )
 
     payload = await unpack_request(request)
+    samples = payload.get("samples")
+
+    if (
+        isinstance(samples, list)
+        and len(samples) > 0
+        and all(isinstance(s, dict) and "inputs" in s for s in samples)
+    ):
+        try:
+            merged, B = samples_to_stacked_inputs(samples)
+            body = run_torch_model_batched(models[model_name], merged, B)
+            return pack_response(body)
+        except ValueError as ve:
+            return Response(status_code=400, content=str(ve))
+        except Exception as e:
+            import traceback
+
+            traceback.print_exc()
+            return Response(status_code=500, content=str(e))
+
     inputs = payload.get("inputs", [])
 
     try:
