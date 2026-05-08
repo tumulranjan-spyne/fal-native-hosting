@@ -1,0 +1,13 @@
+.env
+endpoints.env
+*.log
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.eggs/
+dist/
+build/
+.DS_Store
