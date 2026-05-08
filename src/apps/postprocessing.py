@@ -51,7 +51,7 @@ def _ensure_syspath(caller_globals: dict, tag: str) -> None:
 
 
 @fal.function(
-    machine_type="GPU-A100",
+    machine_type="GPU-RTX5090",
     image=fal.ContainerImage.from_dockerfile_str(
         textwrap.dedent(
             """

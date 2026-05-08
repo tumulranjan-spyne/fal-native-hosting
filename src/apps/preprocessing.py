@@ -59,7 +59,7 @@ def _ensure_syspath(caller_globals: dict, tag: str) -> None:
 
 
 @fal.function(
-    machine_type="GPU-A100",
+    machine_type="GPU-RTX5090",
     image=fal.ContainerImage.from_dockerfile_str(
         # Lines must start at column 0 for fal's DockerfileParser (^COPY) to find COPY/ADD
         # and sync docker_files_list to the remote build context.
